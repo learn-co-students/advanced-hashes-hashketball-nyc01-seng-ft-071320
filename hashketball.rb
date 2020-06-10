@@ -1,4 +1,5 @@
 # Write your code below game_hash
+require 'pry'
 def game_hash
   {
     home: {
@@ -127,3 +128,121 @@ def game_hash
 end
 
 # Write code here
+
+def num_points_scored(name)
+  
+  hashketball = game_hash
+  
+  hashketball.each do |key, value|
+    
+    value[:players].each do |inner_key, inner_value|
+      
+      inner_key.each do |stat_name, stat_value|
+        
+        if inner_key[stat_name] == name
+          return inner_key[:points]
+        end
+      end
+      
+    end
+  end
+end
+
+def shoe_size(name)
+  
+  hashketball = game_hash
+  
+  hashketball.each do |key, value|
+    
+    value[:players].each do |inner_key, inner_value|
+      
+      inner_key.each do |stat_name, stat_value|
+        
+        if inner_key[stat_name] == name
+          return inner_key[:shoe]
+        end
+      end
+      
+    end
+  end
+end
+
+def team_colors(team_name)
+  hashketball = game_hash
+  
+  hashketball.each do |key, value|
+    
+    if value[:team_name] == team_name
+      return value[:colors]
+    end
+ 
+  end
+end
+
+def team_names
+  hashketball = game_hash
+  result_array = []
+  hashketball.each do |key, value|
+    value.each do |inner_key, inner_value|
+      
+      if inner_key == :team_name
+        result_array << inner_value
+      end
+    end
+  end
+  result_array
+end  
+
+def player_numbers(team_name)
+  hashketball = game_hash
+  result_array = []
+  
+  hashketball.each do |key, value|
+    if value[:team_name] == team_name
+      value[:players].each do |player|
+        result_array << player[:number] 
+      end
+    end
+      
+  end
+  result_array
+end
+
+def player_stats (name)
+  hashketball = game_hash
+  
+  hashketball.each do |key, value|
+    value[:players].each do |player|
+      if player[:player_name] == name 
+        return player
+      end
+    end
+  end
+end
+
+def big_shoe_rebounds
+  hashketball = game_hash
+  max_size = -1
+  hashketball.each do |key, value|
+    value[:players].each do |player|
+      if player[:shoe] > max_size
+        max_size = player[:shoe]
+      end
+    end
+  end
+  hashketball.each do |key, value|
+    value[:players].each do |player|
+      if player[:shoe] == max_size
+        return player[:rebounds]
+      end
+    end
+  end
+end
+  
+
+
+
+
+
+
+
