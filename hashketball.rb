@@ -1,4 +1,6 @@
 # Write your code below game_hash
+require "pry"
+
 def game_hash
   {
     home: {
@@ -127,3 +129,160 @@ def game_hash
 end
 
 # Write code here
+
+def num_points_scored(player)
+  answer = ""
+  game_hash.each do |team, team_details|
+    team_details[:players].each do |element|
+      if element[:player_name] == player
+        answer = element[:points]
+        return answer
+      end
+    end
+  end
+end
+
+def shoe_size(player)
+  keys = game_hash.keys
+  count = 0
+  while count < 2 do
+    count2 = 0
+    while count2 < 5 do
+      if game_hash[keys[count]][:players][count2][:player_name] == player
+        return game_hash[keys[count]][:players][count2][:shoe]
+      end
+    count2 += 1
+    end
+  count += 1
+  end
+end
+
+def team_colors(name)
+  keys = game_hash.keys
+  count = 0
+  while count < 2 do
+    if game_hash[keys[count]][:team_name] == name
+      return game_hash[keys[count]][:colors]
+    end
+  count += 1
+  end
+end
+
+def team_names
+  names = []
+  keys = game_hash.keys
+  keys.each do |team|
+    names << game_hash[team][:team_name]
+  end
+  return names
+end
+
+def player_numbers(team_name)
+  numbers = []
+  keys = game_hash.keys
+  keys.each do |team|
+    if game_hash[team][:team_name] == team_name
+      count = 0
+      while count < 5 do
+        numbers << game_hash[team][:players][count][:number]
+        count += 1
+      end
+    end
+  end
+  return numbers
+end
+
+def player_stats(player)
+  answer = ""
+  game_hash.each do |team, team_details|
+    team_details[:players].each do |element|
+      if element[:player_name] == player
+        answer = element
+        return answer
+      end
+    end
+  end
+end
+
+def big_shoe_rebounds
+  max_value = 0
+  biggest_shoe_name = ""
+  home_away = ""
+  i = ""
+  game_hash.each do |team, team_value|
+    team_value[:players].each do |element|
+      if element[:shoe] > max_value
+        max_value = element[:shoe]
+        biggest_shoe_name = element[:player_name]
+        home_away = team
+        i = team_value[:players].index(element)
+      end
+    end
+  end
+  return game_hash[home_away][:players][i][:rebounds]
+end
+
+def most_points_scored
+  max_points = 0
+  answer = ""
+  game_hash.each do |team, team_stats|
+    team_stats[:players].each do |element|
+      if element[:points] > max_points
+        max_points = element[:points]
+        answer = element[:player_name]
+      end
+    end
+  end
+  return answer
+end
+
+def winning_team
+  home_points = 0
+  away_points = 0
+  game_hash.each do |team, team_stats|
+    team_stats[:players].each do |element|
+      if team == :home
+        home_points = home_points + element[:points]
+      elsif team == :away
+        away_points = away_points + element[:points]
+      end
+    end
+  end
+  if home_points > away_points
+    return game_hash[:home][:team_name]
+  elsif home_points < away_points
+    return game_hash[:away][:team_name]
+  end
+end
+
+def player_with_longest_name
+  name_length = 0
+  player_name = ""
+  game_hash.each do |team, team_stats|
+    team_stats[:players].each do |element|
+      if element[:player_name].length > name_length
+        name_length = element[:player_name].length
+        player_name = element[:player_name]
+      end
+    end
+  end
+  return player_name
+end
+
+def long_name_steals_a_ton?
+  max_steals = 0
+  name = ""
+  game_hash.each do |team, team_stats|
+    team_stats[:players].each do |element|
+      if element[:steals] > max_steals
+        max_steals = element[:steals]
+        name = element[:player_name]
+      end
+    end
+  end
+  if name == player_with_longest_name
+    return true
+  else
+    return false
+  end
+end
