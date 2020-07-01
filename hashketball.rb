@@ -1,3 +1,4 @@
+require "pry"
 # Write your code below game_hash
 def game_hash
   {
@@ -126,4 +127,89 @@ def game_hash
   }
 end
 
-# Write code here
+def num_points_scored(player_name)
+  x = 0
+  game_hash.each do |side, team_data|
+    team_data[:players].each do |player_keys, blank|
+      player_keys.each do |label, value|
+        if player_keys[label] == player_name
+          x = player_keys[:points]
+        end
+      end
+    end
+  end
+  x
+end
+  
+def shoe_size(player_name)
+  x = 0
+  game_hash.each do |side, team_data|
+    team_data[:players].each do |player_keys, blank|
+      player_keys.each do |label, value|
+        if player_keys[label] == player_name
+          x = player_keys[:shoe]
+        end
+      end
+    end
+  end
+  x
+end        
+
+def team_colors(team_n)
+  x = 0
+  game_hash.each do |side, team_data|
+    team_data.each do |player_keys, values|
+      if values == team_n
+        x = team_data[:colors]
+      end
+    end
+  end
+  x
+end       
+
+def team_names
+  x = []
+  game_hash.each do |side, team_data|
+    x << team_data[:team_name]
+  end
+  x
+end 
+
+
+def player_numbers(team_n)
+  x = []
+  game_hash.each do |side, team_data|
+    team_data[:players].each do |player_keys, blank|
+      if team_data[:team_name] == team_n
+        x << player_keys[:number]
+      end
+    end
+  end
+  x
+end
+
+def player_stats(player_n)
+  x = {}
+  game_hash.each do |side, team_data|
+    team_data[:players].each do |player_keys, blank|
+      player_keys.each do |label, value|
+        if player_keys[:player_name] == player_n
+          x[label] = value
+        end
+      end
+    end
+  end
+  x
+end
+
+def big_shoe_rebounds
+  x = {}
+  y = 0
+  game_hash.each do |side, team_data|
+    team_data[:players].each do |player_keys, blank|
+      x[player_keys[:shoe]] = player_keys[:rebounds]
+    end
+  end
+  puts y = x.keys.max
+  return x[y]
+end
