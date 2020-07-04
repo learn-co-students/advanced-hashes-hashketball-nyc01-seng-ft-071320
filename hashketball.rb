@@ -1,4 +1,3 @@
-require 'pry'
 
 def game_hash
   {
@@ -218,3 +217,23 @@ rebound_num =
       return rebound_num
     end
 end
+
+def most_points_scored(player)
+starting_point = nil
+player_most_points =
+
+      game_hash.each do |location, team_info|
+        team_info[:players].each do |player_info|
+          player_point = player_info[:points]
+          starting_point == nil
+          if starting_point == nil
+            starting_point = player_point
+            player_most_points = player_info[:player_name]
+          elsif starting_point < player_point
+            starting_point = player_point
+            player_most_points = player_info[:player_name]
+          end
+        end
+        return player_most_points
+      end
+  end
