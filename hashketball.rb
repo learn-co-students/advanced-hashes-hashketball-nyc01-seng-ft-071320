@@ -1,4 +1,5 @@
-# Write your code below game_hash
+require 'pry'
+
 def game_hash
   {
     home: {
@@ -126,4 +127,94 @@ def game_hash
   }
 end
 
-# Write code here
+def num_points_scored(player_name)
+points = ""
+
+  game_hash.each do |location, team_info|
+    team_info[:players].each do |player_info|
+      if player_info[:player_name] == player_name
+        points = player_info[:points]
+      end
+    end
+  end
+  points
+end
+
+def shoe_size(player_name)
+  size = ""
+
+    game_hash.each do |location, team_info|
+      team_info[:players].each do |player_info|
+        if player_info[:player_name] == player_name
+          size = player_info[:shoe]
+        end
+      end
+    end
+    size
+end
+
+def team_colors(team_name)
+colors = []
+
+  game_hash.each do |location, team_info|
+    if team_info[:team_name] == team_name
+      colors = team_info[:colors]
+    end
+  end
+colors
+end
+
+def team_names
+name_array = []
+
+  game_hash.each do |location, team_info|
+    name_array << team_info[:team_name]
+  end
+  name_array
+end
+
+def player_numbers(team_name)
+number_array = []
+
+    game_hash.each do |location, team_info|
+      team_info[:players].each do |player_info|
+        if team_info[:team_name] == team_name
+          number_array << player_info[:number]
+        end
+      end
+    end
+  number_array
+end
+
+def player_stats(player_name)
+stat_info = {}
+
+  game_hash.each do |location, team_info|
+    team_info[:players].each do |player_info|
+      if player_info[:player_name] == player_name
+        stat_info = player_info
+      end
+    end
+  end
+  stat_info
+end
+
+def big_shoe_rebounds
+starting_size = nil
+rebound_num =
+
+    game_hash.each do |location, team_info|
+      team_info[:players].each do |player_info|
+        shoe_size = player_info[:shoe]
+        starting_size == nil
+        if starting_size == nil
+          starting_size = shoe_size
+          rebound_num = player_info[:rebounds]
+        elsif starting_size < shoe_size
+          starting_size = shoe_size
+          rebound_num = player_info[:rebounds]
+        end
+      end
+      return rebound_num
+    end
+end
