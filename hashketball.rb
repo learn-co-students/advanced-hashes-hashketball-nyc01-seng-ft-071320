@@ -157,6 +157,15 @@ def get_colors
     returned_colors
   end
   
+#----------------------Helper Method------------------------
+
+def get_nums
+nums = game_hash.values.map do |points|
+  points[:players]
+end
+ nums.flatten
+end
+
 
 #---------------------------------------------
 def num_points_scored(player_name)
@@ -179,25 +188,37 @@ end
 def team_colors(team_name)
 colors = get_colors
  if team_name == "Brooklyn Nets"
-   return get_colors[0][0]
+   return get_colors[0]
  end
- else
- return get_colors[0][1]
+ if team_name == "Charlotte Hornets"
+   return get_colors[1]
  end
 end
-
-
 
 #----------------------------------------------
 def team_names
   get_teams
 end
 #----------------------------------------------
+#Returns array of jersey numbers for that team
 
 # def player_numbers(team_name)
-# #Returns array of jersey numbers for that team
+#   nums = get_nums.map.select do |numbers|
+#     if num == team_name
+#       return numbers[:number]
+       
+#   end
+#   nums
+# end
 # end
 
+def player_numbers(team_name)
+  nums = get_nums.map.values do |points|
+    points[:number] 
+    binding.pry
+  end
+  nums
+end
 
 #----------------------------------------------
 
