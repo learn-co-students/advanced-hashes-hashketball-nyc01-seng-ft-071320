@@ -1,3 +1,5 @@
+require 'pry'
+
 # Write your code below game_hash
 def game_hash
   {
@@ -125,5 +127,78 @@ def game_hash
     }
   }
 end
+#-----------------Helper Method----------------------------
+def get_players
+  #keys will pull keys from the game_hash hash which are home and away
+  #map takes those and creates a new array
+  players = game_hash.keys.map do |team|
+    #what is game_hash at a key of (home/away) and then what is in the players key
+    game_hash[team][:players]
+  end
+  #flatten combines the hashes that are in players from both teams and puts them in to one array
+  players.flatten
+  
+end
+#----------------------Helper Method------------------------
 
-# Write code here
+def get_teams
+  returned_teams = game_hash.keys.map do |teams|
+    game_hash[teams][:team_name]
+  end
+  returned_teams.flatten
+end
+
+#----------------------Helper Method------------------------
+
+def get_colors
+  returned_colors = game_hash.values.map do |team_colors|
+    game_hash[team_colors][:colors]
+    end
+    returned_colors.flatten
+  end
+  
+
+#---------------------------------------------
+def num_points_scored(player_name)
+ found_player = get_players.find do |player|
+   player[:player_name] == player_name
+end
+return found_player[:points]
+end
+
+
+#---------------------------------------------
+def shoe_size(player_name)
+found_player = get_players.find do |player|
+  player[:player_name] == player_name
+end
+return found_player[:shoe]
+end
+
+#----------------------------------------------
+def team_colors(team_name)
+ team_colors = get_colors + get_teams
+# if team_name == "Brooklyn Nets" || "Charlotte Hornets"
+  return team_colors
+end
+
+
+#----------------------------------------------
+def team_names
+  get_teams
+end
+#----------------------------------------------
+
+# def player_numbers(team_name)
+# #Returns array of jersey numbers for that team
+# end
+
+
+#----------------------------------------------
+
+# def big_shoe_rebounds
+#   # First, find the player with the largest shoe size
+# # Then, return that player's number of rebounds
+# # Remember to think about return values here.
+# end
+
