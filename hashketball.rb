@@ -1,3 +1,5 @@
+require 'pry'
+
 # Write your code below game_hash
 def game_hash
   {
@@ -125,5 +127,121 @@ def game_hash
     }
   }
 end
+#-----------------Helper Method----------------------------
+def get_players
+  #keys will pull keys from the game_hash hash which are home and away
+  #map takes those and creates a new array
+  players = game_hash.keys.map do |team|
+    #what is game_hash at a key of (home/away) and then what is in the players key
+    game_hash[team][:players]
+  end
+  #flatten combines the hashes that are in players from both teams and puts them in to one array
+  players.flatten
+  
+end
+#----------------------Helper Method------------------------
 
-# Write code here
+def get_teams
+  returned_teams = game_hash.keys.map do |teams|
+    game_hash[teams][:team_name]
+  end
+  returned_teams.flatten
+end
+
+#----------------------Helper Method------------------------
+
+def get_colors
+  returned_colors = game_hash.values.map do |team_colors|
+    team_colors[:colors]
+    end
+    returned_colors
+  end
+  
+#----------------------Helper Method------------------------
+
+def get_nums
+nums = game_hash.values.map do |points|
+  points[:numbers]
+end
+ nums
+end
+
+#----------------------Helper Method------------------------
+
+def get_shoes
+  returned_shoe = game_hash.keys.map do |teams|
+    game_hash[teams]["Mason Plumlee"]
+  end
+  returned_teams
+  binding.pry
+end
+
+
+#---------------------------------------------
+def num_points_scored(player_name)
+ found_player = get_players.find do |player|
+   player[:player_name] == player_name
+end
+return found_player[:points]
+end
+
+
+#---------------------------------------------
+def shoe_size(player_name)
+found_player = get_players.find do |player|
+  player[:player_name] == player_name
+end
+return found_player[:shoe]
+end
+
+#----------------------------------------------
+def team_colors(team_name)
+colors = get_colors
+ if team_name == "Brooklyn Nets"
+   return get_colors[0]
+ end
+ if team_name == "Charlotte Hornets"
+   return get_colors[1]
+ end
+end
+
+#----------------------------------------------
+def team_names
+  get_teams
+end
+#----------------------------------------------
+
+def player_numbers(team_name)
+numbers = []
+  game_hash.each do |key,value|
+    if value[:team_name] == team_name 
+      value[:players].each do |num|
+        numbers << num[:number]
+    end
+    end
+  end
+  numbers
+end
+
+#----------------------------------------------
+
+def big_shoe_rebounds(player_name = "Mason Plumlee")
+found_player = get_players.find do |player|
+  player[:player_name] == player_name
+end
+return found_player[:rebounds]
+end
+
+#----------------------------------------------
+
+def player_stats(player_name)
+found_player = get_players.find do |player|
+  player[:player_name] == player_name
+end
+return found_player
+end
+
+#------------------------------------------------
+
+
+
