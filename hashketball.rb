@@ -152,9 +152,9 @@ end
 
 def get_colors
   returned_colors = game_hash.values.map do |team_colors|
-    game_hash[team_colors][:colors]
+    team_colors[:colors]
     end
-    returned_colors.flatten
+    returned_colors
   end
   
 
@@ -177,10 +177,15 @@ end
 
 #----------------------------------------------
 def team_colors(team_name)
- team_colors = get_colors + get_teams
-# if team_name == "Brooklyn Nets" || "Charlotte Hornets"
-  return team_colors
+colors = get_colors
+ if team_name == "Brooklyn Nets"
+   return get_colors[0][0]
+ end
+ else
+ return get_colors[0][1]
+ end
 end
+
 
 
 #----------------------------------------------
