@@ -161,9 +161,19 @@ def get_colors
 
 def get_nums
 nums = game_hash.values.map do |points|
-  points[:players]
+  points[:numbers]
 end
- nums.flatten
+ nums
+end
+
+#----------------------Helper Method------------------------
+
+def get_shoes
+  returned_shoe = game_hash.keys.map do |teams|
+    game_hash[teams]["Mason Plumlee"]
+  end
+  returned_teams
+  binding.pry
 end
 
 
@@ -200,31 +210,38 @@ def team_names
   get_teams
 end
 #----------------------------------------------
-#Returns array of jersey numbers for that team
-
-# def player_numbers(team_name)
-#   nums = get_nums.map.select do |numbers|
-#     if num == team_name
-#       return numbers[:number]
-       
-#   end
-#   nums
-# end
-# end
 
 def player_numbers(team_name)
-  nums = get_nums.map.values do |points|
-    points[:number] 
-    binding.pry
+numbers = []
+  game_hash.each do |key,value|
+    if value[:team_name] == team_name 
+      value[:players].each do |num|
+        numbers << num[:number]
+    end
+    end
   end
-  nums
+  numbers
 end
 
 #----------------------------------------------
 
-# def big_shoe_rebounds
-#   # First, find the player with the largest shoe size
-# # Then, return that player's number of rebounds
-# # Remember to think about return values here.
-# end
+def big_shoe_rebounds(player_name = "Mason Plumlee")
+found_player = get_players.find do |player|
+  player[:player_name] == player_name
+end
+return found_player[:rebounds]
+end
+
+#----------------------------------------------
+
+def player_stats(player_name)
+found_player = get_players.find do |player|
+  player[:player_name] == player_name
+end
+return found_player
+end
+
+#------------------------------------------------
+
+
 
