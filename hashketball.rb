@@ -171,6 +171,62 @@ def player_numbers(team)
   numbers
 end
 
+def most_points_scored
+  results = []
+  game_hash.each do |key, value|
+    results << value[:players]     
+  end
+  flatten_players = results.flatten
+  most_points = flatten_players[0]
+  flatten_players.each do |stats|
+    if(stats[:points] > most_points[:points])
+      most_points = stats
+    end
+  end
+ most_points[:player_name]   
+end
+
+def winning_team
+  winner = {:team => nil, :total_points => 0}
+  game_hash.each do |key, value|
+    score = 0
+    team = value[:team_name]
+    value[:players].each do |name|
+      score+= name[:points]
+    end
+    if(score > winner[:total_points])
+      winner[:total_points] = score
+      winner[:team] = team
+    end
+  end
+  winner
+end
+
+def player_with_longest_name
+  longest_name = ""
+  game_hash.each do |key, value|
+    value[:players].each do |name|
+      if(longest_name.length < name[:player_name].length)
+        longest_name = name[:player_name]
+      end
+    end
+  end
+  longest_name
+end
+
+def long_name_steals_a_ton?
+  most_steals = {:steals => 0}
+  longest_name = player_with_longest_name
+  game_hash.each do |key, value|
+    value[:players].each do |stats|
+      if(stats[:steals] > most_steals[:steals])
+        most_steals = stats
+      end
+    end
+  end
+  most_steals[:player_name] == longest_name
+end
+
 def player_stats(player)
   #helper method
   find_stats(player)
@@ -207,12 +263,14 @@ def find_stats(player, stat = nil)
 end
   
   
-
-
+####### BONUS/ SUPER BONUS QUESTIONS ###########
+puts most_points_scored
   
+puts winning_team
 
+puts player_with_longest_name
 
-
+puts long_name_steals_a_ton?
 
 
 
