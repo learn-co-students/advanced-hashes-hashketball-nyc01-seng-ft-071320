@@ -1,3 +1,6 @@
+require './hashketball.rb'
+require 'pry'
+
 # Write your code below game_hash
 def game_hash
   {
@@ -126,4 +129,97 @@ def game_hash
   }
 end
 
-# Write code here
+def num_points_scored(playerLookUp)
+  game_hash.each do |team, teamStats|
+    teamStats[:players].each do |stats|
+      if stats[:player_name] == playerLookUp
+        return stats[:points]
+      end
+    end
+  end
+end
+
+def shoe_size(playerLookUp)
+  game_hash.each do |team, teamStats|
+    teamStats[:players].each do |stats|
+      if stats[:player_name] == playerLookUp
+        return stats[:shoe]
+      end
+    end
+  end
+end
+
+
+def team_colors(team_colors)
+  game_hash.each do |team, teamStats|
+    if team_colors == "Brooklyn Nets"
+      return game_hash[:home][:colors]
+    else 
+      return game_hash[:away][:colors]
+    end
+  end
+end
+
+def team_names
+  teamsArray = []
+  teamsArray << game_hash[:home][:team_name]
+  teamsArray << game_hash[:away][:team_name]
+  return teamsArray
+end
+
+def player_numbers(teamName)
+  playerNumArray = []
+  game_hash.each do |team, teamStats|
+    if teamStats[:team_name] == teamName
+      teamStats.each do |innerKey, stats|
+        if innerKey == :players
+          stats.each do |player|
+            playerNumArray.push(player[:number])
+            #binding.pry
+          end
+        end
+      end
+    end
+  end
+  #binding.pry
+  return playerNumArray
+end
+
+def player_stats(playerN)
+  game_hash.each do |team, teamStats|
+    teamStats.each do |innerKey, value|
+      #binding.pry
+      if innerKey == :players
+        value.each do |player|
+          if playerN == player[:player_name]
+            #binding.pry
+            return player
+          end
+        end
+      end
+    end
+  end
+end
+
+
+def big_shoe_rebounds
+  largestShoe = 0;
+  rebounds = 0;
+  game_hash.each do |team, teamStats|
+    teamStats[:players].each do |value|
+      if largestShoe < value[:shoe]
+        largestShoe = value[:shoe]
+        rebounds = value[:rebounds]
+      end
+    end
+  end
+  return rebounds
+end
+
+
+
+
+
+
+
+
