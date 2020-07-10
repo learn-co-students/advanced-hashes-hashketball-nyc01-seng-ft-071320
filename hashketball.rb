@@ -1,3 +1,5 @@
+require 'pry'
+
 # Write your code below game_hash
 def game_hash
   {
@@ -127,3 +129,144 @@ def game_hash
 end
 
 # Write code here
+
+def num_points_scored(player_name)
+  game_hash.each do |location, team|
+    team[:players].each do |player|
+      #binding.pry
+      if player[:player_name] == player_name
+        return player[:points]
+      end
+    end
+  end
+end
+
+def shoe_size(player_name)
+game_hash.each do |location, team|
+    team[:players].each do |player|
+      #binding.pry
+      if player[:player_name] == player_name
+        return player[:shoe]
+      end
+    end
+  end
+end
+
+def team_colors(team_name)
+  game_hash.each do |location, team|
+    if team[:team_name] == team_name
+      return team[:colors]
+    end
+  end
+end
+
+def team_names
+    return [ game_hash[:home][:team_name], game_hash[:away][:team_name] ]
+end
+
+def player_numbers(team_name)
+  team_numbers = []
+  game_hash.each do |location, team|
+    if team[:team_name] == team_name
+      team[:players].each do |player|
+        team_numbers << player[:number]
+      end
+    end
+  end
+  return team_numbers
+end
+
+def player_stats(player_name)
+  game_hash.each do |loication, team|
+    team[:players].each do |players|
+      if players[:player_name] == player_name
+        return players
+      end
+    end
+  end
+end
+
+def big_shoe_rebounds
+  biggest_player_rebounds = 0
+  big_shoe_size = 0
+  game_hash.each do |location, team|
+    team[:players].each do |player|
+      if player[:shoe] > big_shoe_size
+        big_shoe_size = player[:shoe]
+        biggest_player_rebounds = player[:rebounds]
+      end
+    end
+  end
+  biggest_player_rebounds
+end
+
+
+
+
+
+
+
+
+
+
+
+# def player_helper
+#   game_hash[:home][:players].merge(game_hash[:away][:players])
+# end
+
+# def get_team_helper(team)
+#   case team
+#   when game_hash[:home][:team_name]
+#     game_hash[:home]
+#   when game_hash[:away][:team_name]
+#     game_hash[:away]
+#   end
+# end
+
+# def player_numbers(team)
+#   get_team_helper(team)[:player].map do |key, value|
+#     value[:number]
+#   end
+# end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
