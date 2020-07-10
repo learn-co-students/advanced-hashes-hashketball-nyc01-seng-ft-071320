@@ -127,3 +127,117 @@ def game_hash
 end
 
 # Write code here
+def num_points_scored(player_name)
+
+  game_hash.values.each do |team|  
+   team[:players].each do |player|
+     return player[:points] if player.has_value?(player_name)
+   end
+ end
+
+end
+
+
+def shoe_size(player_name)
+
+  game_hash.values.each do |team_info|  
+   team_info[:players].each do |player|
+     return player[:shoe] if player.has_value?(player_name)
+   end
+ end
+
+end
+
+def team_colors(team)
+
+  game_hash.values.each do |team_info|
+   if team_info.has_value?(team)
+     return team_info[:colors].map(&:capitalize)
+   end
+ end
+end
+
+def team_names
+ game_hash.values.map {|value| value[:team_name]}
+
+end
+
+def player_numbers(team)
+
+  game_hash.values.each do |team_info|
+   if team_info.has_value?(team)
+     return team_info[:players].map { |player| player[:number]}
+   end
+ end
+end
+
+
+def player_stats(player_name)
+#binding.pry
+  game_hash.values.each do |info|
+   info[:players].each do |player|
+     if player.has_value?(player_name)
+       #binding.pry
+        return player
+     end
+   end
+ end
+
+end
+
+def big_shoe_rebounds
+
+  largest_pair = 0
+ player_rebounds = 0
+ game_hash.values.each do |info|
+   info[:players].each do |player|
+     if player[:shoe] > largest_pair
+       largest_pair= player[:shoe] 
+       player_rebounds = player[:rebounds] 
+     end
+   end
+ end
+ return player_rebounds
+end
+
+
+def most_points_scored
+
+  points = 0
+ points_owner = ""
+ game_hash.values.each do |info|
+   info[:players].each do |player|
+     if player[:points] > points
+       points = player[:points] 
+       points_owner = player[:player_name] 
+     end
+   end
+ end
+ return points_owner
+end
+
+
+def winning_team
+
+  top_team = {}
+ game_hash.values.each do |info|
+   team_points = 0
+   info[:players].each do |player|
+     points += player[:points]
+   end
+   top_team[team_info[:team_name]] = team_points
+ end
+ top_team.key(top_team.values.max) 
+end
+
+
+def player_with_longest_name
+
+  longest_name = []
+ game_hash.values.each do |team_info|
+   team_info[:players].each do |player|
+     longest_name << player[:player_name]
+   end
+ end
+longest_name.max_by{|name| name.length}
+end
