@@ -1,4 +1,5 @@
 # Write your code below game_hash
+require 'pry'
 def game_hash
   {
     home: {
@@ -127,3 +128,108 @@ def game_hash
 end
 
 # Write code here
+def num_points_scored(player)
+#  binding.pry
+  answer = ""
+  game_hash.each do |team, team_info|
+    team_info[:players].each do |attributes|
+     if attributes[:player_name] == player
+       answer = attributes[:points]
+    #  binding.pry
+        end
+      end
+  end
+  answer
+  end
+
+def shoe_size(player)
+  answer = ""
+  game_hash.each do |team, team_info|
+    team_info[:players].each do |attributes|
+      if attributes[:player_name] == player
+        answer = attributes[:shoe]
+      end
+    end
+  end
+  answer
+end
+
+def team_colors(look_up)
+  answer = ""
+  game_hash.each do |team, team_info|
+  if team_info[:team_name] == look_up
+    answer = team_info[:colors]
+  end
+end
+answer
+end
+  
+def team_names
+  game_hash.each_with_object ([]) do |(team, team_info), answer|
+    answer << team_info[:team_name]
+  end
+end
+
+def player_numbers(look_up)
+  game_hash.each_with_object ([]) do |(team, team_info), answer|
+    team_info[:players].each do |attributes|
+    #binding.pry
+    if look_up == team_info[:team_name]
+      answer << attributes[:number]
+    end
+  end
+  end
+end
+  
+def player_stats(look_up)
+  answer = ""
+  game_hash.each do |team, team_info|
+    team_info[:players].each do |attributes|
+      if look_up == attributes[:player_name]
+        answer = attributes
+       # binding.pry
+      end
+    end
+    answer
+  end
+  answer
+end
+
+def big_shoe_rebounds
+  answer = ""
+  size = 0
+  game_hash.each do |team, team_info|
+    team_info[:players].each do |attributes|
+      if  attributes[:shoe] > size
+        size = attributes[:shoe]
+      end
+  end
+end
+game_hash.each do |team, team_info|
+  team_info[:players].each do |attributes|
+    if attributes[:shoe] == size
+      answer = attributes[:rebounds]
+     # binding.pry
+    end
+  end
+end
+answer
+end
+    
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
