@@ -171,19 +171,62 @@ def player_numbers(name)
   numbers
 end
 
-def big_shoe_rebounds
-  big_shoe_size = 0
-  rebounds = 0
+def biggest_num(data_to_compare, data_to_return)
+  biggest = 0
+  result = nil
   
   game_hash.each_value { |team|
     team[:players].each { |player|
-      if player[:shoe] > big_shoe_size
-        big_shoe_size = player[:shoe]
-        rebounds = player[:rebounds]
+      if player[data_to_compare] > biggest
+        biggest = player[data_to_compare]
+        result = player[data_to_return]
       end
     }
   }
-  rebounds
+  result
+end
+
+def big_shoe_rebounds
+  biggest_num(:shoe, :rebounds)
+end
+
+def most_points_scored
+  biggest_num(:points, :player_name)
+end
+
+def winning_team
+  biggest = 0
+  winning_team = ""
+  
+  game_hash.each_value { |team|
+  
+    points = team[:players].inject(0) { |sum, player|
+      sum + player[:points]    
+    }
+    
+    if points > biggest
+      biggest = points
+      winning_team = team[:team_name]
+    end
+  }
+  
+  winning_team
+end
+
+def player_with_longest_name
+  longest_names = []
+  game_hash.each_value { |team| 
+  longest_names << team[:players].max_by { |player|
+        player[:player_name].length
+      }[:player_name]
+  }
+  longest_names.max { |name1, name2|
+    name1.length <=> name2.length    
+  }
+end
+
+def longest_name_steals_a_ton?
+  player_with_longest_name == biggest_num(:steals, :player_name) ? true : false
 end
 
 # binding.pry
