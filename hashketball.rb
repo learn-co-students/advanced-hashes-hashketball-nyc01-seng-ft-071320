@@ -1,4 +1,5 @@
-# Write your code below game_hash
+
+require 'pry'
 def game_hash
   {
     home: {
@@ -126,4 +127,92 @@ def game_hash
   }
 end
 
-# Write code here
+
+
+
+  
+def num_points_scored(player)
+
+  total_points = 0
+  game_hash.each do |home_away, team_info|
+    team_info[:players].each do |stats|
+        if stats[:player_name] == player
+              total_points = stats[:points]
+        end
+    end
+  end
+  total_points
+end
+
+def shoe_size(player)
+  
+ player_size = 0
+  game_hash.each do |home_away, team_info|
+    team_info[:players].find do |stats|
+        if stats[:player_name] == player
+              player_size = stats[:shoe]
+        end
+    end
+  end
+  player_size
+end 
+  
+def team_colors(team)
+game_hash.each do |key,value|
+   value.each do|inner_key, inner_value|
+   if inner_value == team
+      return game_hash[key][:colors]
+    end
+   end
+  end 
+  
+end 
+
+ def team_names
+ [game_hash[:home][:team_name], game_hash[:away][:team_name]]
+ 
+  end
+ 
+ def player_numbers(team_name)
+   array = []
+  	game_hash.each do |key, value|
+  	   if value[:team_name] == team_name 
+  
+    	value[:players].each do |player|
+   		 array << player[:number]
+        end
+      end
+    end 
+  array 
+end 
+ 
+ def player_stats(player_name)
+
+  hash = {}
+  game_hash.each do |player, player_info|
+  player_info[:players].each do |stats| 
+   if stats[:player_name] == player_name 
+     
+   		 hash = stats
+   		  
+       end 
+    end 
+  end 
+ hash 
+end
+
+def all_players_merged
+  game_hash[:home][:players].concat(game_hash[:away][:players])
+end
+
+def big_shoe_rebounds
+  player_size = 0 
+  biggest_shoe_size = all_players_merged.each_with_object([]) {|key, a| a << key[:shoe]}
+  all_players_merged.each do |key|
+    if key[:shoe] == biggest_shoe_size.max
+      player_size = key[:rebounds]
+     
+    end  
+  end
+  player_size
+end
