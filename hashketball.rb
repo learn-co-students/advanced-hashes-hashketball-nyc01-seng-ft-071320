@@ -1,3 +1,4 @@
+require 'pry'
 # Write your code below game_hash
 def game_hash
   {
@@ -127,3 +128,73 @@ def game_hash
 end
 
 # Write code here
+
+def player_helper
+  players_aoh = game_hash[:home][:players].concat(game_hash[:away][:players])
+  Hash[players_aoh.map {|h| [h.delete(:player_name), h]}]
+end
+
+def num_points_scored(player_name)
+  result = 0
+  player_helper.each do |k, v|
+    if k == player_name
+    result = v[:points]
+    end
+  end
+  result
+end
+
+def shoe_size(player_name)
+  result = 0
+  player_helper.each do |k, v|
+    if k == player_name
+    result = v[:shoe]
+    end
+  end
+  result
+end
+
+def team_colors(team_name)
+  if game_hash[:home][:team_name] == team_name
+    game_hash[:home][:colors]
+  elsif game_hash[:away][:team_name] == team_name
+    game_hash[:away][:colors]
+  end
+end
+
+def team_names
+  teams = []
+  teams.push(game_hash[:home][:team_name], game_hash[:away][:team_name])
+end 
+
+def player_numbers(team)
+  result = []
+  if team_names[0] == team
+    game_hash[:home][:players].each do |player|
+    result.push(player[:number])
+  end
+  elsif team_names[1] == team
+    game_hash[:away][:players].each do |player|
+    result.push(player[:number])
+  end
+  end
+  result
+end 
+
+def player_stats(player)
+  player_helper.fetch(player).merge({player_name: player})
+end
+
+def big_shoe_rebounds
+  largest_shoe = 0
+  largest_shoe_player = ""
+  player_helper.each do |player, stats_hash|
+    if stats_hash.fetch(:shoe) > largest_shoe
+      largest_shoe = stats_hash[:shoe]
+      largest_shoe_player = player
+    end
+  end
+  player_helper.fetch(largest_shoe_player).values_at(:rebounds).join.to_i
+end 
+
+# binding.pry
